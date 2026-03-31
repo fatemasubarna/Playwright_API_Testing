@@ -12,7 +12,8 @@ test("Admin Can Create New User", async ({ request }) => {
 
     const payload = {
         name: faker.person.fullName(),
-        email: faker.internet.email(),
+        email: faker.internet.userName() + "@gmail.com",
+        //email: faker.internet.email(),
         password: faker.internet.password({ length: 8 }),
         phone_number: "01122" + faker.string.numeric(6),
         nid: faker.string.numeric(8),
@@ -22,7 +23,15 @@ test("Admin Can Create New User", async ({ request }) => {
     let res = await createUserRequest(request, payload, process.env.Token);
     console.log(res);
 
+   // expect(res.message).toContain("User created"); 
+//    expect(
+//   res.message.includes("User created") ||
+//   res.message.includes("User already exists")||
+//   res.message.includes("Only Gmail addresses (@gmail.com) are allowed.")
+// ).toBeTruthy();
+    // saveEnvVar("userId", res.user.id, ".env")
+
     expect(res.message).toContain("User created");
-   //expect(res.message).toContain("User already exists");
-    saveEnvVar("user Id", res.user.id, ".env")
+expect(res.user, `Create failed: ${res.message}`).toBeDefined();
+saveEnvVar("userId", res.user.id, ".env")
 })
