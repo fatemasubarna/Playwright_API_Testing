@@ -3,18 +3,20 @@ import { test, expect } from '@playwright/test';
 import { createUserRequest } from '../services/UserCreate.service';
 import { saveEnvVar } from '../utils/Utils';
 import * as dotenv from 'dotenv';
+import { faker } from '@faker-js/faker';
+
 
 test("Admin Can Create New User", async ({ request }) => {
 
     dotenv.config({ override: true }); // ✅ re-reads .env to get fresh token
 
     const payload = {
-        name: "user",
-        email: "strashhhgs@gmail.com",
-        password: "12345678",
-        phone_number: "01122334445",
-        nid: "12345678",
-        role: "customer"
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password({ length: 8 }),
+        phone_number: "01122" + faker.string.numeric(6),
+        nid: faker.string.numeric(8),
+         role: "customer"
     }
 
     let res = await createUserRequest(request, payload, process.env.Token);

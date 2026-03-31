@@ -3,17 +3,18 @@ import { test, expect } from '@playwright/test';
 import { updateUserRequest } from '../services/UserUpdate.service';
 import { saveEnvVar } from '../utils/Utils';
 import * as dotenv from 'dotenv';
+import { faker } from '@faker-js/faker';
 
-test.only("Admin Can Update Existing User", async ({ request }) => {
+test("Admin Can Update Existing User", async ({ request }) => {
 
     dotenv.config({ override: true }); // ✅ re-reads .env to get fresh token
 
     const payload = {
-        name: "user",
-        email: "strashhhgs@gmail.com",
-        password: "12345678",
-        phone_number: "01122334445",
-        nid: "12345678",
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password({ length: 8 }),
+        phone_number: "01122" + faker.string.numeric(6),
+        nid: faker.string.numeric(8),
         role: "customer"
     }
 

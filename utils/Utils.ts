@@ -1,8 +1,8 @@
 import { test, request } from "@playwright/test";
 import fs from "fs";
 import path from "path";
-import * as dotenv from "dotenv";  // ✅ Fixed: uncommented
-dotenv.config();                   // ✅ Fixed: uncommented
+import * as dotenv from "dotenv";  
+dotenv.config();                  
 
 export function generateRandomNumber(min:number,max:number){
     return (Math.floor(Math.random()*(max-min)+min)); 
